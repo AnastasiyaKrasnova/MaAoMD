@@ -16,7 +16,7 @@ def find_my_clusters(dataset, n_clusters):
     rgn=np.random.RandomState(randint(0,2**32-1))
     i=rgn.permutation(dataset.shape[0])[:n_clusters]
     centers=dataset[i]
-
+    init=False
     while True:
         labels = pairwise_distances_argmin(dataset, centers)
         new_centers = np.array([dataset[labels == j].mean(0)
@@ -25,7 +25,9 @@ def find_my_clusters(dataset, n_clusters):
         if np.all(centers == new_centers):
             break
         centers = new_centers
-    
+        if (init==False):
+            draw_plot(centers,labels)
+            init=True
     return centers, labels
 
 def find_inter_clusters(dataset, n_clusters):
@@ -35,6 +37,11 @@ def find_inter_clusters(dataset, n_clusters):
     cluster_centers=kmeans.cluster_centers_
     return cluster_centers, y_kmeans
 
+def draw_plot(centers,labels):
+    plt.scatter(dataset[:,0],dataset[:,1], c=labels, s=1, cmap='viridis')
+    plt.scatter(centers[:,0],centers[:,1], c='black', s=50, alpha=0.5)
+    plt.show()
+
 time_seed=round(time.time() * 1000)
 seed(time_seed)
 
@@ -43,14 +50,11 @@ plt.scatter(dataset[:,0],dataset[:,1],s=1)
 plt.show()
 
 cluster_centers, y_kmeans=find_inter_clusters(dataset, 5)
-plt.scatter(dataset[:,0],dataset[:,1], c=y_kmeans, s=1, cmap='viridis')
-plt.scatter(cluster_centers[:,0],cluster_centers[:,1], c='black', s=50, alpha=0.5)
-plt.show()
+draw_plot(cluster_centers,y_kmeans)
 
 centers, labels=find_my_clusters(dataset, 5)
-plt.scatter(dataset[:,0],dataset[:,1], c=labels, s=1, cmap='viridis')
-plt.scatter(centers[:,0],centers[:,1], c='black', s=50, alpha=0.5)
-plt.show()
+draw_plot(centers,labels)
+
 
 
 
