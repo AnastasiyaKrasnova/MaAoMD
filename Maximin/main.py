@@ -4,7 +4,7 @@ import time
 
 def main():
     maximin=Maximin()
-    maximin.init_data(20000,5)
+    maximin.init_data(20000,10)
     'Plotting.draw_plot(maximin.dataset, maximin.labels, True)'
     maximin.generate_center()
     maximin.find_second_center()
@@ -13,8 +13,6 @@ def main():
         maximin.move_centers()
         res=maximin.new_kernel()
         if (res==False):
-            maximin.divide_to_centers()
-            maximin.move_centers()
             break
 
     Plotting.draw_plot(maximin.dataset, maximin.labels, False, maximin.centers)

@@ -11,7 +11,8 @@ class Maximin:
     def init_data(self, _n_samples, _n_centers):
         time_seed=round(time.time() * 1000)
         seed(time_seed)
-        self.dataset, self.labels=make_blobs(n_samples=_n_samples, centers=_n_centers,cluster_std=1, random_state=randint(0,100))
+        'self.dataset, self.labels=make_blobs(n_samples=_n_samples, centers=_n_centers,cluster_std=1, random_state=randint(0,100))'
+        self.dataset=np.random.rand(_n_samples,2)
         self.n_clusters=0
 
     def find_mean_centers_dist(self):
@@ -54,22 +55,6 @@ class Maximin:
         else:
             return False
         
-       
-        
 
-    def find_my_clusters(self):
-        
-
-        rgn=np.random.RandomState(randint(0,2**32-1))
-        i=rgn.permutation(self.dataset.shape[0])[1]
-        self.centers=self.dataset[i]
-        while True:
-            self.labels = pairwise_distances_argmin(self.dataset, self.centers)
-            new_centers = np.array([self.dataset[self.labels == j].mean(0)
-                                for j in range(self.n_clusters)])
-                                
-            if np.all(self.centers == new_centers):
-                break
-            self.centers = new_centers
            
 
