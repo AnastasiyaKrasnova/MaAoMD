@@ -11,6 +11,7 @@ def main():
     while True:
         maximin.divide_to_centers()
         maximin.move_centers()
+        Plotting.draw_plot(maximin.dataset, maximin.labels, False, maximin.centers)
         res=maximin.new_kernel()
         if (res==False):
             break
