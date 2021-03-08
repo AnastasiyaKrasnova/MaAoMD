@@ -5,19 +5,15 @@ from Potentials import PotentialMethod
 def main():
     classifier=PotentialMethod(feature_data)
     params=classifier.train()
-    xlist,ylist=generateTestData()
-    labels=[]
-    print(classifier.guess(0.5,2))
-    print(classifier.guess(0.5,-2))
-    print(xlist)
-    print(ylist)
-    for i in range(len(xlist)):
-        func_class=classifier.guess(xlist[i],ylist[i])
+    x_testlist,y_testlist=generateTestData()
+    test_labels=[]
+    for i in range(len(x_testlist)):
+        func_class=classifier.guess(x_testlist[i],y_testlist[i])
         if (func_class==1):
-            labels.append('blue')
+            test_labels.append('blue')
         else:
-            labels.append('red')
-    viewData(params,xlist,ylist,np.array(labels))
+            test_labels.append('red')
+    viewData(params,x_testlist,y_testlist,np.array(test_labels), feature_data)
 
 if __name__ == "__main__":
     main()

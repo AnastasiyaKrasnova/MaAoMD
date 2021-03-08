@@ -21,17 +21,28 @@ def generateTestData():
     return xlist, ylist
 
 
-def viewData(params,x_test,y_test,labels):
+def viewData(params,x_test,y_test,labels,src_points):
+    x,y=generateFunctionData(params,-5,5)
+
+    threshold = 20
+    y = np.ma.masked_less(y, -1 * threshold)
+    y = np.ma.masked_greater(y, threshold)
+    plt.plot(x,y,color="tab:orange")
+
+    plt.scatter(x_test,y_test, c=labels, s=10)
+
+    for i in range(len(src_points)):
+        category, points= src_points[i]
+        if (category==1):
+            plt.scatter(points[0],points[1], c='blue', s=70, alpha=0.7)
+        else:
+             plt.scatter(points[0],points[1], c='red', s=70, alpha=0.7)
+
     ax = plt.gca()
     ax.spines['right'].set_color('none')
     ax.spines['top'].set_color('none')
     ax.xaxis.set_ticks_position('bottom')
     ax.spines['bottom'].set_position(('zero'))
     ax.spines['left'].set_position(('zero'))
-    x,y=generateFunctionData(params,-5,0)
-    plt.plot(x,y,color="tab:orange")
-    x,y=generateFunctionData(params,0,5)
-    plt.plot(x,y,color="tab:orange")
-    plt.scatter(x_test,y_test, c=labels, s=10)
     plt.grid(True)
     plt.show()
