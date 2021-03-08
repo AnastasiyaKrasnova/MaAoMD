@@ -12,10 +12,17 @@ class PotentialMethod():
             category, curr_point, new_point = self.get_points(i)
             curr_params = self.get_params(curr_point, coef)
             prev_params=self.sum_params(prev_params, curr_params)
-            print(prev_params)
             K=self.private_potential(prev_params,new_point)
             coef=self.get_coef(K, category)
-            print(K)
+        self.classification_func_params=prev_params
+        return prev_params
+
+    def guess(self,x,y):
+        func=self.classification_func_params[0]+self.classification_func_params[1]*x+self.classification_func_params[2]*y+self.classification_func_params[3]*x*y
+        if (func>=0):
+            return 1
+        else:
+           return 2
     
 
     def private_potential(self, params, point):
